@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glacier HVAC</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+        .gradient-button {
+            background-image: linear-gradient(to right, #1d4ed8, #2563eb, #3b82f6);
+            transition: all 0.3s ease;
+        }
+        .gradient-button:hover {
+            background-image: linear-gradient(to right, #1e40af, #1d4ed8, #2563eb);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+        .section-heading {
+            position: relative;
+            display: inline-block;
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 60%;
+            height: 4px;
+            background-color: #2563eb;
+            border-radius: 2px;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 250px;
+        }
+        .gallery-item img {
+            transition: transform 0.5s ease;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+        }
+        .stats-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .map-container {
+            height: 350px;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="text-gray-900">
+
+    <!-- Header/Navigation Bar -->
+    <header class="bg-white shadow-sm py-4 sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#home" class="flex items-center space-x-2">
+                <div class="bg-white-600 w-10 h-10 rounded-full flex items-center justify-center">
+                    <i class="fas fa-snowflake text-blue-500 text-xl"></i>
+                </div>
+                <span class="text-2xl font-bold text-blue-700 hidden sm:block">Glacier HVAC Solution</span>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex space-x-6">
+                <a href="#home" class="text-gray-700 hover:text-blue-600 font-medium px-3 py-2 rounded-md transition-colors">Home</a>
+                <a href="#services" class="text-gray-700 hover:text-blue-600 font-medium px-3 py-2 rounded-md transition-colors">Services</a>
+                <a href="#gallery" class="text-gray-700 hover:text-blue-600 font-medium px-3 py-2 rounded-md transition-colors">Gallery</a>
+                <a href="#about" class="text-gray-700 hover:text-blue-600 font-medium px-3 py-2 rounded-md transition-colors">About Us</a>
+                <a href="#testimonials" class="text-gray-700 hover:text-blue-600 font-medium px-3 py-2 rounded-md transition-colors">Testimonials</a>
+                <a href="#contact" class="text-gray-700 hover:text-blue-600 font-medium px-3 py-2 rounded-md transition-colors">Contact</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-2 shadow-md">
+            <a href="#home" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors">Home</a>
+            <a href="#services" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors">Services</a>
+            <a href="#gallery" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors">Gallery</a>
+            <a href="#about" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors">About Us</a>
+            <a href="#testimonials" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors">Testimonials</a>
+            <a href="#contact" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="relative text-black-800 py-20 md:py-32 overflow-hidden shadow-xl rounded-b-lg"
+                 style="background-image: url('img/image12.jpg'); background-size: cover; background-position: center; background-color: gray;">
+            <div class="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="text-center md:text-left max-w-2xl md:w-1/2">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 animate-fade-in-up">
+                        Residential and commercial HVAC experts
+                    </h1>
+                    <p class="text-lg md:text-xl mb-8 opacity-90 animate-fade-in-up delay-200">
+                        Professional installation, repair, and maintenance services to keep your space comfortable year-round.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="#contact" class="inline-block px-8 py-4 text-lg font-semibold gradient-button rounded-full shadow-lg hover:scale-105 transition-transform duration-300 animate-fade-in-up delay-400">
+                            <i class="fas fa-calendar-check mr-2"></i>Schedule Service
+                        </a>
+                        <a href="tel:+254716091861" class="inline-block px-8 py-4 text-lg font-semibold bg-white text-blue-700 rounded-full shadow-lg hover:bg-gray-100 transition-colors duration-300 animate-fade-in-up delay-600">
+                            <i class="fas fa-phone mr-2"></i>Call Now
+                        </a>
+                    </div>
+                </div>
+               </div>
+        </section>
+
+       
+
+        <!-- Services Section -->
+        <section id="services" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-4 section-heading mx-auto w-fit">Our HVAC Services</h2>
+                <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12">
+                    Comprehensive heating, ventilation, and air conditioning solutions for residential and commercial properties in Mombasa.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service Card 1: AC Installation -->
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                        <div class="service-icon bg-blue-100 text-blue-600">
+                            <i class="fas fa-wind text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-3 text-center">AC Installation</h3>
+                        <p class="text-gray-700 mb-4 text-center">
+                            Professional installation of energy-efficient air conditioning systems tailored to your space.
+                        </p>
+                        <ul class="text-gray-600 space-y-2 mb-6">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-500 mt-1 mr-2"></i>
+                                <span>Energy-efficient models</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-500 mt-1 mr-2"></i>
+                                <span>Precise sizing calculations</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-500 mt-1 mr-2"></i>
+                                <span>Smart thermostat integration</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="block text-center text-blue-600 font-medium hover:text-blue-800 transition-colors">
+                            Request Installation <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+
+                    <!-- Service Card 2: Heating Repair -->
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                        <div class="service-icon bg-red-100 text-red-600">
+                            <i class="fas fa-fire text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-3 text-center">Heating Repair</h3>
+                        <p class="text-gray-700 mb-4 text-center">
+                            Fast and reliable repair services for all types of heating systems, including furnaces and heat pumps.
+                        </p>
+                        <ul class="text-gray-600 space-y-2 mb-6">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-500 mt-1 mr-2"></i>
+                                <span>24/7 emergency service</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-500 mt-1 mr-2"></i>
+                                <span>Diagnostic expertise</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-500 mt-1 mr-2"></i>
+                                <span>Same-day repairs</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="block text-center text-blue-600 font-medium hover:text-blue-800 transition-colors">
+                            Schedule Repair <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+
+                    <!-- Service Card 3: HVAC Maintenance -->
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                        <div class="service-icon bg-green-100 text-green-600">
+                            <i class="fas fa-tools text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-3 text-center">HVAC Maintenance</h3>
+                        <p class="text-gray-700 mb-4 text-center">
+                            Preventative maintenance plans to extend system life and ensure peak efficiency.
+                        </p>
+                        <ul class="text-gray-600 space-y-2 mb-6">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-500 mt-1 mr-2"></i>
+                                <span>Bi-annual tune-ups</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-500 mt-1 mr-2"></i>
+                                <span>Priority scheduling</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-blue-500 mt-1 mr-2"></i>
+                                <span>Discounts on repairs</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="block text-center text-blue-600 font-medium hover:text-blue-800 transition-colors">
+                            View Plans <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-16 md:py-24 bg-blue-50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-4 section-heading mx-auto w-fit">Our Work Gallery</h2>
+                <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12">
+                    Explore our recent HVAC installations and projects in Mombasa and surrounding areas.
+                </p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Gallery Item 1 -->
+                    <div class="gallery-item">
+                        <img src="img/image18.jpg" alt="Commercial HVAC Installation">
+                        <div class="gallery-overlay">
+                            <h3 class="font-bold text-lg">Commercial Installation</h3>
+                            <p>Nyali Office Complex</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Gallery Item 2 -->
+                    <div class="gallery-item">
+                        <img src="img/image19.jpg" alt="Residential AC Unit">
+                        <div class="gallery-overlay">
+                            <h3 class="font-bold text-lg">Residential AC Installation</h3>
+                            <p>Bamburi Residence</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Gallery Item 3 -->
+                    <div class="gallery-item">
+                        <img src="img/image17.jpg" alt="Ductwork Installation">
+                        <div class="gallery-overlay">
+                            <h3 class="font-bold text-lg">Ductwork Installation</h3>
+                            <p>Mombasa CBD Building</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Gallery Item 4 -->
+                    <div class="gallery-item">
+                        <img src="img/image16.jpg" alt="Smart Thermostat">
+                        <div class="gallery-overlay">
+                            <h3 class="font-bold text-lg">Smart Thermostat Installation</h3>
+                            <p>Kizingo Apartment</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Gallery Item 5 -->
+                    <div class="gallery-item">
+                        <img src="img/image3.jpg" alt="HVAC Maintenance">
+                        <div class="gallery-overlay">
+                            <h3 class="font-bold text-lg">Seasonal Maintenance</h3>
+                            <p>Nyali Hotel</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Gallery Item 6 -->
+                    <div class="gallery-item">
+                        <img src="img/image11.jpg" alt="Industrial HVAC">
+                        <div class="gallery-overlay">
+                            <h3 class="font-bold text-lg">Industrial Cooling System</h3>
+                            <p>Miritini Factory</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us Section -->
+        <section class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-4 section-heading mx-auto w-fit">Why Choose GLACIER HVAC?</h2>
+                <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12">
+                    We're committed to excellence in every aspect of our HVAC services.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature Card 1 -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md flex items-start space-x-4 transform hover:scale-105 transition-transform duration-300">
+                        <div class="flex-shrink-0 text-blue-600">
+                            <i class="fas fa-user-check text-3xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">Certified Technicians</h3>
+                            <p class="text-gray-700">Our team consists of highly trained and certified HVAC professionals with 10+ years of experience.</p>
+                        </div>
+                    </div>
+                    <!-- Feature Card 2 -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md flex items-start space-x-4 transform hover:scale-105 transition-transform duration-300">
+                        <div class="flex-shrink-0 text-blue-600">
+                            <i class="fas fa-medal text-3xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">Quality Guarantee</h3>
+                            <p class="text-gray-700">We stand behind our work with a 100% satisfaction guarantee on all services.</p>
+                        </div>
+                    </div>
+                    <!-- Feature Card 3 -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md flex items-start space-x-4 transform hover:scale-105 transition-transform duration-300">
+                        <div class="flex-shrink-0 text-blue-600">
+                            <i class="fas fa-tag text-3xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">Transparent Pricing</h3>
+                            <p class="text-gray-700">No hidden fees, just honest and competitive pricing for all services.</p>
+                        </div>
+                    </div>
+                    <!-- Feature Card 4 -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md flex items-start space-x-4 transform hover:scale-105 transition-transform duration-300">
+                        <div class="flex-shrink-0 text-blue-600">
+                            <i class="fas fa-bolt text-3xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">Rapid Response</h3>
+                            <p class="text-gray-700">24/7 emergency services with same-day availability for urgent repairs.</p>
+                        </div>
+                    </div>
+                    <!-- Feature Card 5 -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md flex items-start space-x-4 transform hover:scale-105 transition-transform duration-300">
+                        <div class="flex-shrink-0 text-blue-600">
+                            <i class="fas fa-leaf text-3xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">Energy Efficient</h3>
+                            <p class="text-gray-700">We prioritize solutions that reduce energy consumption and lower utility bills.</p>
+                        </div>
+                    </div>
+                    <!-- Feature Card 6 -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md flex items-start space-x-4 transform hover:scale-105 transition-transform duration-300">
+                        <div class="flex-shrink-0 text-blue-600">
+                            <i class="fas fa-headset text-3xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">Ongoing Support</h3>
+                            <p class="text-gray-700">Lifetime technical support for all installations and maintenance plans.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-16 md:py-24 bg-blue-50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-4 section-heading mx-auto w-fit">Customer Testimonials</h2>
+                <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12">
+                    Hear what our satisfied clients have to say about our HVAC services.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Testimonial Card 1 -->
+                    <div class="testimonial-card bg-white p-6 rounded-xl shadow-lg border-t-4 border-blue-600">
+                        <div class="flex items-center mb-4">
+                            <div class="flex items-center">
+                                <img src="img/image T1.jpg" alt="Susan Wanjiru" class="w-12 h-12 rounded-full mr-3 border-2 border-blue-400">
+                                <div>
+                                    <p class="font-semibold text-gray-800">Susan Wanjiru</p>
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-4">"GLACIER HVAC Solutions did an amazing job installing our new AC unit. Professional, timely, and excellent service! Our home has never been more comfortable."</p>
+                        <p class="text-sm text-gray-600">Mombasa, CBD · AC Installation</p>
+                    </div>
+                    <!-- Testimonial Card 2 -->
+                    <div class="testimonial-card bg-white p-6 rounded-xl shadow-lg border-t-4 border-blue-600">
+                        <div class="flex items-center mb-4">
+                            <div class="flex items-center">
+                                <img src="img/image T2.jpg" alt="Ali Hassan" class="w-12 h-12 rounded-full mr-3 border-2 border-blue-400">
+                                <div>
+                                    <p class="font-semibold text-gray-800">Ali Hassan</p>
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-4">"Their heating repair service was incredibly fast and effective. They came out on a Sunday evening when our furnace stopped working. Highly recommend!"</p>
+                        <p class="text-sm text-gray-600">Nyali · Heating Repair</p>
+                    </div>
+                    <!-- Testimonial Card 3 -->
+                    <div class="testimonial-card bg-white p-6 rounded-xl shadow-lg border-t-4 border-blue-600">
+                        <div class="flex items-center mb-4">
+                            <div class="flex items-center">
+                                <img src="img/image T.jpg" alt="Raj Patel" class="w-12 h-12 rounded-full mr-3 border-2 border-blue-400">
+                                <div>
+                                    <p class="font-semibold text-gray-800">Raj Patel</p>
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-4">"We've been using Glacier HVAC for years for maintenance. They are always thorough and keep our systems running perfectly. Their maintenance plan has saved us thousands!"</p>
+                        <p class="text-sm text-gray-600">Bamburi · Maintenance Plan</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <div class="relative">
+                        <img src="img/image6.jpg"
+                             alt="HVAC technicians working"
+                             class="w-full h-auto rounded-xl shadow-xl">
+                        
+                    </div>
+                </div>
+                <div class="md:w-1/2 text-center md:text-left">
+                    <h2 class="text-4xl font-bold mb-6 section-heading mx-auto md:mx-0 w-fit">About GLACIER HVAC Solutions</h2>
+                    <p class="text-lg text-gray-700 mb-4">
+                         Glacier HVAC Solutions has been dedicated to providing top-tier heating, ventilation, and air conditioning services across Mombasa and the surrounding regions. What started as a small family business has grown into one of the most trusted HVAC providers in the area.
+                    </p>
+                    <p class="text-lg text-gray-700 mb-4">
+                        Our mission is to ensure the comfort and safety of our clients through expert installations, timely repairs, and comprehensive maintenance. We believe in building long-term relationships based on trust, quality workmanship, and exceptional customer service.
+                    </p>
+                    <p class="text-lg text-gray-700 mb-6">
+                        We pride ourselves on our commitment to continuous improvement. Our technicians regularly undergo training to stay current with the latest HVAC technologies and best practices, ensuring we can handle any challenge with expertise.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="bg-blue-50 px-4 py-2 rounded-lg flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Licensed & Insured</span>
+                        </div>
+                        <div class="bg-blue-50 px-4 py-2 rounded-lg flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Local & Family-Owned</span>
+                        </div>
+                        <div class="bg-blue-50 px-4 py-2 rounded-lg flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Environmentally Conscious</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 md:py-24 bg-blue-50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-4 section-heading mx-auto w-fit">Contact Us</h2>
+                <p class="text-lg text-gray-600 text-center max-w-3xl mx-auto mb-12">
+                    Reach out for a free consultation or emergency service. We're here to help with all your HVAC needs.
+                </p>
+                <div class="flex flex-col lg:flex-row gap-12">
+                    <div class="lg:w-1/2">
+                        <div class="bg-white p-8 rounded-xl shadow-lg">
+                            <h3 class="text-2xl font-semibold mb-6">Get a Free Quote</h3>
+                            <form class="space-y-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name *</label>
+                                        <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition-colors" placeholder="Your Name" required>
+                                    </div>
+                                    <div>
+                                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
+                                        <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition-colors" placeholder="(123) 456-7890" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                                    <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition-colors" placeholder="your@example.com" required>
+                                </div>
+                                <div>
+                                    <label for="service" class="block text-sm font-medium text-gray-700 mb-1">Service Needed *</label>
+                                    <select id="service" name="service" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition-colors" required>
+                                        <option value="">Select a Service</option>
+                                        <option value="AC Installation">AC Installation</option>
+                                        <option value="Heating Repair">Heating Repair</option>
+                                        <option value="HVAC Maintenance">HVAC Maintenance</option>
+                                        <option value="Duct Cleaning">Duct Cleaning</option>
+                                        <option value="Smart Thermostat">Smart Thermostat Installation</option>
+                                        <option value="Emergency Service">Emergency Service</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Your Message *</label>
+                                    <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition-colors" placeholder="Describe your needs or ask a question..." required></textarea>
+                                </div>
+                                <button type="submit" class="w-full px-6 py-3 text-lg font-semibold gradient-button rounded-md shadow-lg hover:scale-105 transition-transform duration-300">
+                                    <i class="fas fa-paper-plane mr-2"></i>Send Message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="lg:w-1/2">
+                        <div class="bg-white p-8 rounded-xl shadow-lg mb-8">
+                            <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
+                            <div class="space-y-6">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 bg-blue-100 p-3 rounded-lg text-blue-600">
+                                        <i class="fas fa-map-marker-alt text-xl"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-lg font-semibold text-gray-800">Our Location</h4>
+                                        <p class="text-gray-600">Mombasa, KENYA</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 bg-blue-100 p-3 rounded-lg text-blue-600">
+                                        <i class="fas fa-phone text-xl"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-lg font-semibold text-gray-800">Call Us</h4>
+                                        <p class="text-gray-600">+254 748 471 841</p>
+                                        <p class="text-gray-600">Emergency: 24/7 Available</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 bg-blue-100 p-3 rounded-lg text-blue-600">
+                                        <i class="fas fa-envelope text-xl"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-lg font-semibold text-gray-800">Email Us</h4>
+                                        <p class="text-gray-600">glacierhvacsolution@gmail.com</p>
+                                        <p class="text-gray-600">support@glacierhvac.co.ke</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 bg-blue-100 p-3 rounded-lg text-blue-600">
+                                        <i class="fas fa-clock text-xl"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-lg font-semibold text-gray-800">Working Hours</h4>
+                                        <p class="text-gray-600">Monday - Friday: 8:00 AM - 6:00 PM</p>
+                                        <p class="text-gray-600">Saturday: 9:00 AM - 4:00 PM</p>
+                                        <p class="text-gray-600">Sunday: Emergency Service Only</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127641.17042138956!2d39.55953226718133!3d-4.043475562898343!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x184012e78ec02c3d%3A0xde67c3723949d1ad!2sMombasa!5e0!3m2!1sen!2ske!4v1686149755331!5m2!1sen!2ske" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 rounded-t-lg">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-600 w-10 h-10 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-snowflake text-white text-xl"></i>
+                        </div>
+                        <span class="text-xl font-bold">Glacier HVAC</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Providing premium heating and cooling solutions both Residential and Commercial.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Services</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">AC Installation</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Heating Repair</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">HVAC Maintenance</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Duct Cleaning</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Smart Thermostats</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Emergency Services</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
+                        <li><a href="#gallery" class="hover:text-white transition-colors">Gallery</a></li>
+                        <li><a href="#about" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#testimonials" class="hover:text-white transition-colors">Testimonials</a></li>
+                        <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3"></i>
+                            <span>Mombasa, KENYA</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone mt-1 mr-3"></i>
+                            <span>+254 748 471 841</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3"></i>
+                            <span>glacierhvacsolution@gmail.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-clock mt-1 mr-3"></i>
+                            <span>Mon-Fri: 8:00 AM - 6:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8 text-center">
+                <p class="mb-4">&copy; 2025 Glacier HVAC Solutions. All rights reserved.</p>
+                <div class="flex justify-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Sitemap</a>
+                </div>
+                <p class="text-gray-500 text-sm mt-4">Designed by <span class="text-red-500">MWASHUKE</span></p>
+            </div>
+        </div>
+    </footer>
+
+     <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+
+                // Close mobile menu if open
+                if (mobileMenu.classList.contains('block')) {
+                    mobileMenu.classList.remove('block');
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('block');
+        });
+
+        // Simple form validation
+        const contactForm = document.querySelector('form');
+        if(contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simple validation - check if required fields are filled
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const service = document.getElementById('service').value;
+                
+                if(name && email && service !== '') {
+                    alert('Thank you for your message! We will contact you shortly.');
+                    contactForm.reset();
+                } else {
+                    alert('Please fill in all required fields.');
+                }
+            });
+        }
+    </script>
+</body>
+</html> 
